@@ -41,19 +41,23 @@ namespace hs.HistoryFetch.Games
             await Repository.UpdateManyAsync(existedGames);
             await Repository.DeleteManyAsync(compareResult.Deletes);
         }
-        public async Task FetchAllSales(int days, int[] gameIds)
+        public async Task FetchAllSales( int gameId,int days)
         {
 
-            foreach (var gameId in gameIds)
-            {
+            
                 var targetDate = DateTime.Now.AddDays(-1 * days);
                 for (var date = DateTime.Now; date <= targetDate; date.AddDays(-1))
                 {
                     var sales= await   fetchService.FetchHistoryTrade(gameId, date);
 
-                }
+
+                 await   saleRepository.InsertManyAsync(sales);
+
+                
             }
         }
+
+        
 
 
     }

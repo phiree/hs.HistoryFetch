@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 using hs.HistoryFetch.EntityFrameworkCore;
@@ -11,9 +12,11 @@ using hs.HistoryFetch.EntityFrameworkCore;
 namespace hs.HistoryFetch.Migrations
 {
     [DbContext(typeof(HistoryFetchDbContext))]
-    partial class HistoryFetchDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230313102744_'add-sale'")]
+    partial class addsale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

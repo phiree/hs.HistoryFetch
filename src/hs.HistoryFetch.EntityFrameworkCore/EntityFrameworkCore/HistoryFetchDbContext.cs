@@ -26,6 +26,7 @@ public class HistoryFetchDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
    public  DbSet<Games.Game> Games { get; set; }
+    public DbSet<Games.Sale> Sales { get; set; }
     #region Entities from the modules
 
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
