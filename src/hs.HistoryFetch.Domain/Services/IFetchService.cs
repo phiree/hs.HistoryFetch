@@ -11,6 +11,6 @@ namespace hs.HistoryFetch.Services
     {
         Task<IList<Game>> FetchGames();
        
-        Task<IList<Sale>> FetchHistoryTrade(int gameId, DateTime date);
+        Task FetchHistoryTrade(int gameId, DateTime date, int startPage = 1);
     }
 }

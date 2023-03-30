@@ -1,9 +1,8 @@
-﻿using hs.HistoryFetch.Services;
-using JetBrains.Annotations;
+﻿using AutoMapper;
+using hs.HistoryFetch.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -14,10 +13,15 @@ namespace hs.HistoryFetch.Games
     {
         IFetchService fetchService;
         IRepository<Sale, int> saleRepository;
-        public GameAppService(IRepository<Game, int> repository,IRepository<Sale,int> saleRepository, IFetchService fetchService) : base(repository)
+        IRepository<Game, int> gameRepository;
+       
+        
+        public GameAppService(IRepository<Game, int> repository, IRepository<Sale, int> saleRepository, IFetchService fetchService, IRepository<Game, int> gameRepository ) : base(repository)
         {
             this.fetchService = fetchService;
             this.saleRepository = saleRepository;
+            this.gameRepository = gameRepository;
+          
         }
 
         public async Task FetchAllGamesAsync()
@@ -41,24 +45,29 @@ namespace hs.HistoryFetch.Games
             await Repository.UpdateManyAsync(existedGames);
             await Repository.DeleteManyAsync(compareResult.Deletes);
         }
-        public async Task FetchAllSales( int gameId,int days)
+        public async Task FetchAllSales(int startGameId,  DateTime targetDate, int startPage)
         {
 
             
-                var targetDate = DateTime.Now.AddDays(-1 * days);
-                for (var date = DateTime.Now; date <= targetDate; date.AddDays(-1))
-                {
-                    var sales= await   fetchService.FetchHistoryTrade(gameId, date);
 
 
-                 await   saleRepository.InsertManyAsync(sales);
+            await fetchService.FetchHistoryTrade(startGameId, targetDate,startPage);
 
-                
-            }
+
         }
+        public async Task<IList<GameDto>> GetGames(int[] gameIds)
+        {
+            var games = await gameRepository.GetListAsync(x =>gameIds.Contains(x.Id));
 
-        
+            return ObjectMapper.Map<IList<Game> ,IList<GameDto>>(games);
 
 
+
+        }
     }
+
+
+
+
 }
+

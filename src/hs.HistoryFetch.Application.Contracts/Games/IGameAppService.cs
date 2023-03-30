@@ -9,5 +9,7 @@ namespace hs.HistoryFetch.Games
     public interface IGameAppService : ICrudAppService<GameDto, int> {
     
         Task FetchAllGamesAsync();
+        Task FetchAllSales(int gameId,DateTime date,int startPage);
+        Task<IList<GameDto>> GetGames(int[] gameIds); 
     }
 }

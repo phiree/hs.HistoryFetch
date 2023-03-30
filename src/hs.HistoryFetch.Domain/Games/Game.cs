@@ -13,12 +13,18 @@ namespace hs.HistoryFetch.Games
     {
         public string Name { get; set; }
         public string pcIconUrl { get; set; }
-
+        public GameClientType ClientType { get; set; }
         public    int  Id { get;  set; }
+
+        
 
         public object[] GetKeys()
         {
             return new object[] { Id };
         }
+    }
+    public enum GameClientType { 
+    端游=1,
+    手游
     }
 }

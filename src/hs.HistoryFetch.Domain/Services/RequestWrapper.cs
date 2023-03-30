@@ -14,7 +14,7 @@ namespace hs.HistoryFetch.Services
     internal class RequestWrapper
     {
         
-        public async  Task<T> Request<T>(string url,dynamic jsonParam) {
+        public async  Task<string> Request(string url,dynamic jsonParam) {
             var handler = new HttpClientHandler();
             handler.UseCookies = false;
 
@@ -26,7 +26,7 @@ namespace hs.HistoryFetch.Services
             // https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
             using (var httpClient = new HttpClient(handler))
             {
-                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://www.pzds.com/api/v2/homepage/public/game/all"))
+                using (var request = new HttpRequestMessage(new HttpMethod("POST"), url))
                 {
                     request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
                     request.Headers.TryAddWithoutValidation("Accept-Language", "en,zh-CN;q=0.9,zh;q=0.8,zh-TW;q=0.7");
@@ -48,7 +48,9 @@ namespace hs.HistoryFetch.Services
                     request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
 
                     var response = await httpClient.SendAsync(request);
-                    return await response.Content.ReadFromJsonAsync<T>();
+                    return await response.Content.ReadAsStringAsync();
+                 // return   Newtonsoft.Json.JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+                  //  return await response.Content.ReadFromJsonAsync<T>();
                 }
             }
         }

@@ -17,7 +17,10 @@ namespace hs.HistoryFetch.Games
         public string Title { get; set; }
         public float Price { get; set; }
         public DateTime CreateTime { get; set; }
-        public DateTime TransactionTime { get; set; }
+        /// <summary>
+        /// transactionTime
+        /// </summary>
+        public DateTime? TransactionTime { get; set; }
         public string SimpleMessage { get; set; }
         /// <summary>
         /// 上架时间

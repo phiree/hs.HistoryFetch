@@ -12,8 +12,10 @@ function fetchALlGames() {
 function fetchALlSales() {
     var gameId = $("#gameId").val();// document.getElementById("gameId")
     var days = $("#days").val();
-    debugger;
-    hs.historyFetch.games.game.fetchAllSales({ gameId: gameId, days: days }).done(function (result) {
-        alert("ok")
+    var startPage = $("#startPage").val();
+
+    hs.historyFetch.controllers.game.fetchSaledFromPanzi({ gameId: gameId, days: days, startPage: startPage })
+        .done(function (result) {
+        $("#result").text(result);
     });
 }
